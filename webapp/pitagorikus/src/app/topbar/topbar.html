@@ -1,0 +1,13 @@
+<nav class="navbar bg-body-tertiary" id="navbar-external">
+    <div class="container-fluid" style="margin-left: 10%; margin-right: 10%;">
+        <a class="navbar-brand" href="#">
+            <img src="" alt="P" width="30" height="24" class="d-inline-block align-text-top">
+            Pitagorikus
+        </a>
+        @if(showLoginButton){
+            <div class="d-flex">
+                <button (click)="goToLogin()" class="btn btn-outline-success" type="submit">Entrar</button>
+            </div>
+        }
+    </div>
+</nav>

@@ -6,6 +6,12 @@ import br.dev.gvitorguimaraes.pitagorikus.model.StudyGroupUserInvitation;
 import br.dev.gvitorguimaraes.pitagorikus.model.User;
 import br.dev.gvitorguimaraes.pitagorikus.service.IStudyGroupUserInvitationService;
 import br.dev.gvitorguimaraes.pitagorikus.service.IUserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +26,8 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/study-group-user-invitation/")
+@SecurityRequirement(name = "bearerAuth")
+@Tag(name = "Grupos de Estudo", description = "Endpoints relacionados a grupos de estudo")
 public class StudyGroupUserInvitationController extends ControllerBase {
 
     @Autowired
@@ -28,6 +36,18 @@ public class StudyGroupUserInvitationController extends ControllerBase {
     @Autowired
     private IUserService userService;
 
+    @Operation(
+            summary = "Busca os convites pendentes",
+            description = "Recupera todos os convites pendentes de aceite para o usuário autenticado",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Convites recuperados com sucesso",
+                            content = @Content(schema = @Schema(implementation = ResponseDTO.class))),
+                    @ApiResponse(responseCode = "400", description = "Dados inválidos"),
+                    @ApiResponse(responseCode = "401", description = "Não autenticado"),
+                    @ApiResponse(responseCode = "403", description = "Sem permissão"),
+                    @ApiResponse(responseCode = "500", description = "Erro interno")
+            }
+    )
     @GetMapping
     public ResponseEntity<ResponseDTO<StudyGroupUserInvitationDTO>> getAllPendingInvites(@AuthenticationPrincipal Jwt jwt) {
         try {
@@ -61,6 +81,18 @@ public class StudyGroupUserInvitationController extends ControllerBase {
         }
     }
 
+    @Operation(
+            summary = "Aceita um convite",
+            description = "Aceita um convite",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Convites aceito com sucesso",
+                            content = @Content(schema = @Schema(implementation = ResponseDTO.class))),
+                    @ApiResponse(responseCode = "400", description = "Dados inválidos"),
+                    @ApiResponse(responseCode = "401", description = "Não autenticado"),
+                    @ApiResponse(responseCode = "403", description = "Sem permissão"),
+                    @ApiResponse(responseCode = "500", description = "Erro interno")
+            }
+    )
     @PutMapping("/accept/{id}")
     public ResponseEntity<ResponseDTO<?>> acceptGroupInvite(@AuthenticationPrincipal Jwt jwt,
                                                                        @PathVariable Long id) {

@@ -1,0 +1,58 @@
+
+<!-- List of Groups -->
+@if(groupActiveView === null){
+
+    <div id="groups-list" class="container">
+        <div class="row g-3">
+
+            @for (group of groups; track $index) {
+
+                <div class="col-12 col-sm-6 col-md-4">
+                    <mat-card class="group-card" appearance="outlined" (click)="selectViewGroup(group)">
+                        <mat-card-header>
+                            <mat-card-title-group>
+                            <mat-card-title>{{group.name}}</mat-card-title>
+                            <mat-card-subtitle style="color: gray; font-size: 12px;">{{group.groupId}}</mat-card-subtitle>
+                            <img mat-card-md-image src="{{group.urlPhoto}}">
+                            </mat-card-title-group>
+                        </mat-card-header>
+                        <mat-card-content>
+                            {{group.description}}
+                        </mat-card-content>
+                    </mat-card>
+                </div>
+
+            }
+
+        </div>
+    </div>
+
+}
+
+<!-- Group selected view-->
+@if(groupActiveView != null){
+
+    <div id="posts-list" class="container">
+        <div class="row g-1 justify-content-center">
+
+            @for (post of groupPosts; track $index) {
+
+                <div class="col-lg-7 col-12">
+                    <div class="card h-100">
+                        <img src="..." class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">Card title</h5>
+                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                        </div>
+                        <div class="card-footer">
+                            <small class="text-body-secondary">Last updated 3 mins ago</small>
+                        </div>
+                    </div>
+
+                </div>
+
+            }
+
+        </div>
+    </div>
+}

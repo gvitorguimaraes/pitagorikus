@@ -11,4 +11,5 @@ public interface IStudyGroupService {
 	void delete(StudyGroup studyGroup) throws Exception;
 	Optional<StudyGroup> getById(Long id) throws Exception;
     Optional<StudyGroup> getByIdWithPermissionCheck(User user, Long id, boolean onlyAdmin) throws Exception;
+    Optional<StudyGroup> getByGroupIdWithPermissionCheck(User user, String groupId) throws Exception;
 }

@@ -1,0 +1,48 @@
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card shadow-sm">
+        <div class="card-body text-center">
+          <img [src]="user.avatar" alt="Avatar" class="rounded-circle mb-3" width="120" height="120">
+
+          <form [formGroup]="form">
+            <div class="mb-3 text-start">
+              <label class="form-label">Nome</label>
+              @if(editMode) {
+                <input type="text" class="form-control" formControlName="name">
+              }
+              
+              @if(!editMode) {
+                <p class="form-control-plaintext">{{ user.name }}</p>
+              }
+            </div>
+
+            <div class="mb-3 text-start">
+              <label class="form-label">Email</label>
+              @if(editMode) {
+                 <input type="email" class="form-control" formControlName="email">
+              }
+              @if(!editMode) {
+               <p class="form-control-plaintext">{{ user.email }}</p>
+              }
+            </div>
+
+            <div class="mb-3 text-start">
+              <label class="form-label">Bio</label>
+              @if(editMode) {
+                 <textarea rows="3" class="form-control" formControlName="bio"></textarea>
+              }
+              @if(!editMode) {
+               <p class="form-control-plaintext">{{ user.bio }}</p>
+              }
+            </div>
+          </form>
+
+          <button class="btn btn-primary" (click)="toggleEdit()">
+            {{ editMode ? 'Salvar' : 'Editar Perfil' }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

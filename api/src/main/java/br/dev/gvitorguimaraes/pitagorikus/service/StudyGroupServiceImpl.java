@@ -88,4 +88,18 @@ public class StudyGroupServiceImpl implements IStudyGroupService{
         return repo.findById(id);
     }
 
+    @Override
+    public Optional<StudyGroup> getByGroupIdWithPermissionCheck(User user, String groupId) throws Exception {
+        StudyGroup group = repo.findByGroupId(groupId).orElse(null);
+        if(group != null)
+        {
+            boolean userHasPermission = group.getUsers().stream()
+                                            .anyMatch(u -> u.getUser().equals(user));
+            if (!userHasPermission) {
+                throw new AccessDeniedException("User has no permission to access this group");
+            }
+            return Optional.of(group);
+        }
+        return Optional.empty();
+    }
 }

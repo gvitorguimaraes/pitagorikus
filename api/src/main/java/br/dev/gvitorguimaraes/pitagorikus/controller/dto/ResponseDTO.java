@@ -1,7 +1,12 @@
 package br.dev.gvitorguimaraes.pitagorikus.controller.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.util.List;
 
-public record ResponseDTO<T>(Integer apiVersion, List<T> obj, ErroResponseDTO error) {
-
-}
+@Schema(description = "Objeto padrão de resposta da API")
+public record ResponseDTO<T>(
+        Integer apiVersion,
+        List<T> obj,
+        ErroResponseDTO error
+) { }

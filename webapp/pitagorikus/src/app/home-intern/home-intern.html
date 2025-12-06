@@ -1,0 +1,76 @@
+<mat-drawer-container class="container-material" autosize>
+  <mat-drawer #drawer class="sidenav-material" mode="side">
+    <div class="container-fluid text-center">
+
+        <div class="row profile-sidenav" (click)="changeToProfile()">
+          <div class="col-2">
+            <img class="profile-sidenav-img" src="https://material.angular.dev/assets/img/examples/shiba2.jpg" alt="">
+          </div>
+          <div class="col-10 d-flex align-items-center" style="padding-top: 15px; padding-left: 20px;">
+            <p>Nome nickname etx</p>
+          </div>
+        </div>
+        
+        <div class="row side-menu-pitagorikus">
+            <button (click)="changeToGroups()" matButton>
+            Grupos
+            </button>
+        </div>        
+
+        <div class="row side-menu-pitagorikus">
+            <button  matButton [disabled]="true">
+            Estatísticas
+            </button>   
+        </div>
+
+        <div class="row side-menu-pitagorikus">
+            <button (click)="changeToInvites()" matButton>
+            Convites
+            </button>
+        </div>
+
+    </div>
+  </mat-drawer>
+
+  <div class="sidenav-content-material">
+
+    <div class="top-left">
+
+      <button 
+        id="toggleSideNavButton" 
+        type="button" 
+        matMiniFab 
+        (click)="drawer.toggle()"
+      >
+        <mat-icon 
+          aria-hidden="false" 
+          aria-label="Toggle side-menu" 
+          fontIcon="arrow_forward_ios"
+          [style.transform]="drawer.opened ? 'rotate(180deg)' : 'rotate(0deg)'"
+          style="transition: transform 0.3s ease"
+        >
+        </mat-icon>
+      </button>
+
+    </div>
+
+    <div class="container-fluid content-center">
+
+      @if (this.groupsActive) {
+        <app-groups></app-groups>
+      }
+      
+      @if (this.invitesActive) {
+        <app-invites></app-invites>
+      }
+
+      @if (this.profileActive) {
+        <app-profile></app-profile>
+      }
+      
+      
+    </div>
+
+  </div>
+
+</mat-drawer-container>

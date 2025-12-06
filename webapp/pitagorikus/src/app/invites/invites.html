@@ -1,0 +1,22 @@
+<div id="invites-list" class="container">
+        <div class="row g-1 justify-content-center">
+
+            @for (invite of invites; track $index) {
+
+                <div class="col-lg-7 col-12">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <p class="card-text">Você recebeu um convite para participar do grupo XYZ</p>
+                        </div>
+                        <div class="card-footer">
+                            <button type="button" class="btn btn-light btn-sm" style="margin-right: 20px;">Recusar</button>
+                            <button type="button" class="btn btn-primary btn-sm" style="margin-left: 20px;">Aceitar</button>
+                        </div>
+                    </div>
+
+                </div>
+
+            }
+
+        </div>
+    </div>

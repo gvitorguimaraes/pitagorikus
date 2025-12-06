@@ -38,9 +38,14 @@ public class SecurityConfig {
 		httpSec.csrf(csrf -> csrf.disable())
 			.authorizeHttpRequests(
 					auth -> 
-							auth.requestMatchers("/auth").permitAll()
-							    .requestMatchers("/api/user/register").permitAll()
-							    .anyRequest().authenticated())
+							auth.requestMatchers(
+                                            "/auth",
+                                            "/api/user/register",
+                                            "/v3/api-docs/**",
+                                            "/swagger-ui.html",
+                                            "/swagger-ui/**"
+                            ).permitAll()
+                            .anyRequest().authenticated())
 			.httpBasic(Customizer.withDefaults())
 			.oauth2ResourceServer(
 					conf -> conf.jwt(Customizer.withDefaults()));

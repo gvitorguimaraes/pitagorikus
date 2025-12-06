@@ -3,6 +3,11 @@ package br.dev.gvitorguimaraes.pitagorikus.controller;
 import java.util.HashMap;
 import java.util.Map;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,12 +30,23 @@ import br.dev.gvitorguimaraes.pitagorikus.service.IUserService;
 
 @RestController
 @RequestMapping("/api/user")
+@Tag(name = "Perfil", description = "Serviços de cadastro e perfil de usuários")
 public class UserController extends ControllerBase {
 
 	@Autowired
 	private IUserService service;
-	
-	
+
+
+    @Operation(
+            summary = "Registrar",
+            description = "Registrar um novo usuário",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Usuário criado com sucesso",
+                            content = @Content(schema = @Schema(implementation = ResponseDTO.class))),
+                    @ApiResponse(responseCode = "400", description = "Dados inválidos"),
+                     @ApiResponse(responseCode = "500", description = "Erro interno")
+            }
+    )
 	@PostMapping("/register")
 	public ResponseEntity<ResponseDTO<?>> createNewUser(@RequestBody RegisterDTO registerDTO) {
       try {
@@ -48,8 +64,18 @@ public class UserController extends ControllerBase {
           					 .body(getErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage()));
       }
 	}
-	
-	
+
+
+    @Operation(
+            summary = "Buscar dados",
+            description = "Buscar dados do perfil",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Dados recuperados com sucesso",
+                            content = @Content(schema = @Schema(implementation = ResponseDTO.class))),
+                    @ApiResponse(responseCode = "400", description = "Usuário não encontrado"),
+                    @ApiResponse(responseCode = "500", description = "Erro interno")
+            }
+    )
 	@GetMapping("/profile")
 	public ResponseEntity<ResponseDTO<UserProfileDTO>> getProfile(@AuthenticationPrincipal Jwt jwt) {
 		User user = service.recoveryUserFromUsername(jwt.getSubject()).orElse(null);
@@ -58,8 +84,18 @@ public class UserController extends ControllerBase {
 		}
 		return ResponseEntity.ok(getSuccessResponse(UserProfileMapper.toDTO(user.getProfile())));
 	}
-	
-	
+
+
+    @Operation(
+            summary = "Atualizar dados",
+            description = "Atualizar dados do perfil",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Dados atualizados com sucesso",
+                            content = @Content(schema = @Schema(implementation = ResponseDTO.class))),
+                    @ApiResponse(responseCode = "400", description = "Usuário não encontrado"),
+                    @ApiResponse(responseCode = "500", description = "Erro interno")
+            }
+    )
 	@PutMapping("/profile")
 	public ResponseEntity<ResponseDTO<UserProfileDTO>> updateProfile(@AuthenticationPrincipal Jwt jwt, @RequestBody UserProfileDTO dto) {
 		try{
@@ -75,8 +111,17 @@ public class UserController extends ControllerBase {
  					 .body(getErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage()));
 		}
 	}
-	
-	
+
+
+    @Operation(
+            summary = "Recuperar interesses",
+            description = "Recupera a lista de interesses disponíveis no sistema",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Recuperados com sucesso",
+                            content = @Content(schema = @Schema(implementation = ResponseDTO.class))),
+                    @ApiResponse(responseCode = "500", description = "Erro interno")
+            }
+    )
 	@GetMapping("/profile/interests")
 	public ResponseEntity<ResponseDTO<Map<String, String>>> getInterestsList() {
 		Map<String, String> map = new HashMap<>();

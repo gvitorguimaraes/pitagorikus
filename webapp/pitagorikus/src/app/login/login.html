@@ -1,0 +1,134 @@
+<app-topbar [showLoginButton]="false"></app-topbar>
+
+<div class="container text-center">
+
+    <!-- Login -->
+    @if (!registerView) {
+
+    <div id="login" class="row justify-content-md-center">
+
+        <div class="d-flex justify-content-center align-items-center vh-100">
+
+            <div class="card p-4 shadow-sm rounded" style="min-width: 300px; max-width: 400px; width: 100%;">
+
+                <h3 class="text-center mb-4">Login</h3>
+                <form (ngSubmit)="login()">
+                    <div class="mb-3">
+                        <input
+                            [(ngModel)]="authObj().username"
+                            type="username" 
+                            name="username"
+                            class="form-control" 
+                            id="usernamePitagorikus" 
+                            placeholder="Usuário"
+                        >
+                    </div>
+                    <div class="mb-3">
+                        <input 
+                            [(ngModel)]="authObj().password"
+                            type="password" 
+                            name="password"
+                            class="form-control" 
+                            id="passwordPitagorikus" 
+                            placeholder="Senha"
+                        >
+                    </div>
+                    <br/>
+                    <button 
+                        type="submit"
+                        class="btn btn-outline-success w-100"
+                    >
+                        Entrar
+                    </button>
+                </form>
+                
+                <hr/>
+                <p>Ainda não possui uma conta?</p>
+                <button (click)="changeToRegister()" class="btn btn-outline-success w-100">Crie sua conta</button>
+            </div>
+
+        </div>
+    </div>
+
+    }
+    
+
+    <!--Registre-se-->
+    @if (registerView) {
+    <div id="register" class="row justify-content-md-center">
+
+        <div class="d-flex justify-content-center align-items-center vh-100">
+
+            <div class="card p-4 shadow-sm rounded" style="min-width: 300px; max-width: 400px; width: 100%;">
+
+                <h3 class="text-center mb-4">Crie sua conta</h3>
+                <form (ngSubmit)="register()">
+                    <div class="mb-3">
+                        <input 
+                            formControlName="name" 
+                            type="text" 
+                            class="form-control" 
+                            id="name" 
+                            placeholder="Nome"
+                        >
+                    </div>
+                    <div class="mb-3">
+                        <input 
+                            formControlName="email"
+                            type="email" 
+                            class="form-control" 
+                            id="email" 
+                            placeholder="E-mail"
+                        >
+                    </div>
+                    <div class="mb-3">
+                        <input 
+                            formControlName="username"
+                            type="text" 
+                            class="form-control" 
+                            id="usernamePitagorikus" 
+                            placeholder="Usuário"
+                        >
+                    </div>
+                    <div class="mb-3">
+                        <input 
+                            formControlName="password"
+                            type="password" 
+                            class="form-control" 
+                            id="passwordPitagorikus" 
+                            placeholder="Senha"
+                        >
+                    </div>
+                    <div class="mb-3">
+                        <input 
+                        formControlName="passwordConfirm"
+                        type="password" 
+                        class="form-control" 
+                        id="passwordConfirmPitagorikus" 
+                        placeholder="Confime sua senha"
+                    >
+                    </div>
+                    <br/>
+                    <button 
+                        type="submit"
+                        class="btn btn-outline-success w-100"
+                    >
+                        Criar conta
+                    </button>
+                </form>
+                <button 
+                    (click)="changeToLogin()"
+                    style=" margin-top: 20px;
+                            background: none;
+                            border: none;
+                            color: rgb(82, 82, 82);
+                            text-decoration: underline;
+                            cursor: pointer;" 
+                >Faça login</button>
+            </div>
+
+        </div>
+    </div>
+    } 
+
+</div>
